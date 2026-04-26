@@ -34,8 +34,8 @@ def format_forextester_row(row: list[str], output_symbol: str) -> list[str]:
     opened_at = timestamp_to_datetime(row[0])
     return [
         output_symbol,
-        opened_at.strftime("%Y.%m.%d"),
-        opened_at.strftime("%H:%M"),
+        opened_at.strftime("%Y%m%d"),
+        opened_at.strftime("%H%M%S"),
         row[1],
         row[2],
         row[3],

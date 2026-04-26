@@ -24,8 +24,8 @@ class ForexTesterConverterTest(unittest.TestCase):
             format_forextester_row(kline, "BTCUSD"),
             [
                 "BTCUSD",
-                "2019.01.01",
-                "00:00",
+                "20190101",
+                "000000",
                 "3700.00",
                 "3710.50",
                 "3695.25",
@@ -50,7 +50,7 @@ class ForexTesterConverterTest(unittest.TestCase):
             "0",
         ]
 
-        self.assertEqual(format_forextester_row(kline, "BTCUSD")[:3], ["BTCUSD", "2025.01.01", "00:00"])
+        self.assertEqual(format_forextester_row(kline, "BTCUSD")[:3], ["BTCUSD", "20250101", "000000"])
 
     def test_detects_kline_data_rows_and_skips_headers(self):
         self.assertTrue(is_kline_data_row(["1546300800000", "1", "2", "3", "4", "5"]))
