@@ -4,7 +4,7 @@ from btcusd_forextester import format_forextester_row, is_kline_data_row
 
 
 class ForexTesterConverterTest(unittest.TestCase):
-    def test_formats_binance_kline_as_forextester_row(self):
+    def test_formats_binance_kline_as_forextester_row_without_volume_with_three_decimals(self):
         kline = [
             "1546300800000",
             "3700.00",
@@ -26,11 +26,10 @@ class ForexTesterConverterTest(unittest.TestCase):
                 "BTCUSD",
                 "20190101",
                 "000000",
-                "3700.00",
-                "3710.50",
-                "3695.25",
-                "3705.75",
-                "12.345",
+                "3700.000",
+                "3710.500",
+                "3695.250",
+                "3705.750",
             ],
         )
 

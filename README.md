@@ -24,21 +24,20 @@ Times are UTC.
 The CSV has no header row. Each row uses this field order:
 
 ```text
-<TICKER>,<DTYYYYMMDD>,<TIME>,<OPEN>,<HIGH>,<LOW>,<CLOSE>,<VOL>
+<TICKER>,<DTYYYYMMDD>,<TIME>,<OPEN>,<HIGH>,<LOW>,<CLOSE>
 ```
 
 Example:
 
 ```csv
-BTCUSD,20190901,000000,9588.74000000,9590.93000000,9579.34000000,9579.62000000,22.38426100
+BTCUSD,20190901,000000,9588.740,9590.930,9579.340,9579.620
 ```
 
 Field notes:
 
 - `DTYYYYMMDD` is the UTC date, for example `20190901`.
 - `TIME` is the UTC time in `HHMMSS`, for example `000000`.
-- `VOL` is Binance base asset volume for the 1-minute candle.
-
+- `OPEN`, `HIGH`, `LOW`, and `CLOSE` are rounded to 3 decimal places.
 ## Downloading From GitHub
 
 The CSV is stored with Git LFS because it is larger than GitHub's regular file size limit.
@@ -79,7 +78,7 @@ python3 -m unittest tests/test_forextester_converter.py
 
 The committed CSV was checked for:
 
-- 8 columns per row.
+- 7 columns per row.
 - `YYYYMMDD` date format.
 - `HHMMSS` time format.
 - No duplicate timestamps.

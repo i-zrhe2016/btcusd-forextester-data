@@ -12,12 +12,14 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import zipfile
+from decimal import Decimal, ROUND_HALF_UP
 from datetime import UTC, date, datetime, time as dt_time, timedelta
 from pathlib import Path
 
 
 BASE_URL = "https://data.binance.vision"
 API_URL = "https://data-api.binance.vision/api/v3/klines"
+THREE_DECIMAL_PLACES = Decimal("0.001")
 
 
 def is_kline_data_row(row: list[str]) -> bool:
@@ -30,17 +32,20 @@ def timestamp_to_datetime(value: str) -> datetime:
     return datetime.fromtimestamp(timestamp / divisor, tz=UTC)
 
 
+def format_price(value: str) -> str:
+    return str(Decimal(value).quantize(THREE_DECIMAL_PLACES, rounding=ROUND_HALF_UP))
+
+
 def format_forextester_row(row: list[str], output_symbol: str) -> list[str]:
     opened_at = timestamp_to_datetime(row[0])
     return [
         output_symbol,
         opened_at.strftime("%Y%m%d"),
         opened_at.strftime("%H%M%S"),
-        row[1],
-        row[2],
-        row[3],
-        row[4],
-        row[5],
+        format_price(row[1]),
+        format_price(row[2]),
+        format_price(row[3]),
+        format_price(row[4]),
     ]
 
 
@@ -188,7 +193,7 @@ def convert(
     with output_path.open("w", newline="", encoding="utf-8") as csv_file:
         writer = csv.writer(csv_file)
         if include_header:
-            writer.writerow(["Symbol", "Date", "Time", "Open", "High", "Low", "Close", "Volume"])
+            writer.writerow(["Symbol", "Date", "Time", "Open", "High", "Low", "Close"])
 
         monthly_end = month_start(end_at.date()) - timedelta(days=1)
         for month in iter_months(start_day, monthly_end):
